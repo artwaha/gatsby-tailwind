@@ -4,13 +4,18 @@ import Layout from "../components/layout";
 import Seo from "../components/seo";
 
 const BlogPage = ({ data }) => {
-  const nodes = data.allFile.nodes;
+  //   console.log(data);
+  const nodes = data.allMdx.nodes;
   //   console.log(nodes);
 
   return (
     <Layout pageTitle="My Blog Posts">
       {nodes.map((node) => (
-        <li key={node.name}> {node.name} </li>
+        <article key={node.id}>
+          <h2>{node.frontmatter.title}</h2>
+          <p>Posted: {node.frontmatter.date}</p>
+          <p>{node.excerpt}</p>
+        </article>
       ))}
     </Layout>
   );
@@ -18,9 +23,14 @@ const BlogPage = ({ data }) => {
 
 export const query = graphql`
   query {
-    allFile {
+    allMdx(sort: { frontmatter: { date: DESC } }) {
       nodes {
-        name
+        frontmatter {
+          date(formatString: "MMMM D, YYYY")
+          title
+        }
+        id
+        excerpt
       }
     }
   }
