@@ -13,5 +13,5 @@ module.exports = {
       "path": "./src/pages/"
     },
     __key: "pages"
-  }]
+  }, "gatsby-plugin-postcss"]
 };
